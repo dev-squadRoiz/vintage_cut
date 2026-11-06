@@ -411,6 +411,7 @@ img {
     color: var(--text-muted);
 }
 
+
 /* SEÇÃO DE SERVIÇOS */
 .servicos-section {
     background-color: var(--bg-primary);
@@ -513,7 +514,7 @@ img {
     border-color: var(--accent-gold);
 }
 
-/* SEÇÃO DE PRODUTOS FÍSICOS */
+/* SEÇÃO DE PRODUTOS FÍSICOS 
 .produtos-section {
     background-color: var(--bg-surface);
     border-top: 1px solid var(--border-color);
@@ -647,7 +648,7 @@ img {
 .btn-buy-product:hover {
     background-color: var(--accent-gold-hover);
 }
-
+*/
 /* SEÇÃO DE AGENDAMENTO / FORMULÁRIO */
 .booking-section {
     background-color: var(--bg-primary);

@@ -107,11 +107,12 @@ function selecionarServico(nomeServico) {
         agendamentoSection.scrollIntoView({ behavior: 'smooth' });
     }
 }
-
+/*
 function selecionarProduto(nomeProduto) {
     selecionarServico(nomeProduto);
+    
 }
-
+*/
 // ============================================================================
 // 7. PROCESSAMENTO DO FORMULÁRIO DE AGENDAMENTO
 // ============================================================================
