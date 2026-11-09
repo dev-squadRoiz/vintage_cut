@@ -4,7 +4,7 @@
 > **Disciplina:** Desenvolvimento Web para IA  
 > **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
 > **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
-> **Prazo:** 08/11/2026 até às 23h59
+
 
 ---
 
