@@ -1,146 +1,184 @@
-# 💈 Barbearia Vintage & Cut — Assistente Virtual com IA
+# 💈 Barbearia Vintage & Cut — Sistema Web com Assistente de IA
 
-Projeto de Landing Page e Sistema de Atendimento Inteligente para a **Barbearia Vintage & Cut**, desenvolvido para a disciplina de **Desenvolvimento Web para IA**. O sistema conta com integração oficial à API do **Google Gemini** através de um backend Node.js seguro, provendo um atendente virtual com persona própria (**Mestre Vicente**), base de conhecimento fundamentada e guardrails estritos.
-
----
-
-## ✂️ Sobre o Projeto
-
-A **Vintage & Cut** é uma barbearia com foco na tradição e sofisticação do cuidado masculino clássico (visagismo, navalhas afiadas, toalhas quentes e barboterapia). 
-
-O objetivo da solução é aliar a experiência visual clássica à conveniência moderna:
-1. **Landing Page Responsiva:** Apresentação da barbearia, catálogo de serviços e horários.
-2. **Formulário de Agendamento:** Reserva direta com cálculo de data mínima, máscara telefônica e integração com WhatsApp.
-3. **Assistente Virtual de IA (Mestre Vicente):** Atendimento humanizado em tempo real para tirar dúvidas sobre serviços, valores, horários e orientar o cliente no agendamento.
+> **3ª Avaliação (AV3 — Parte 1): Projeto e Entrega do Código**  
+> **Disciplina:** Desenvolvimento Web para IA  
+> **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
+> **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
+> **Prazo:** 08/11/2026 até às 23h59
 
 ---
 
-## 🤖 A Persona: Mestre Vicente
-
-Diferente de chatbots genéricos baseados em regras rígidas de *if/else*, o assistente possui uma identidade contextualizada:
-
-* **Nome:** Mestre Vicente
-* **Perfil:** Barbeiro sênior experiente, tradicional, acolhedor e educado. Trata cordialmente o cliente como *"cavalheiro"* ou *"meu caro"*.
-* **Objetivo:** Esclarecer dúvidas sobre serviços, cortes, barboterapia e guiar o cliente até a reserva de horário.
-* **Grounding (Base de Conhecimento):** Conhece com precisão a tabela de serviços da barbearia:
-  * *Corte Masculino Clássico* (R$ 45,00)
-  * *Barboterapia Completa* (R$ 35,00)
-  * *Combo Master Vintage* (R$ 70,00)
-  * *Pigmentação & Camuflagem* (R$ 30,00)
-  * Horários (Seg a Sáb, 09h às 20h; Domingos fechado) e endereço em Teresina - PI.
-* **Guardrails (Limites Éticos e de Nicho):**
-  * A IA só responde sobre o escopo da barbearia. Perguntas sobre futebol, política ou outros temas são gentilmente redirecionadas.
-  * Não inventa preços nem serviços inexistentes.
-  * Alerta educadamente que a barbearia não abre aos domingos ou feriados.
+## 📌 Sumário
+1. [Sobre o Projeto](#-sobre-o-projeto)
+2. [Público-Alvo](#-público-alvo)
+3. [Integrantes do Grupo](#-integrantes-do-grupo)
+4. [Tecnologias Utilizadas](#-tecnologias-utilizadas)
+5. [Estrutura do Projeto](#-estrutura-do-projeto)
+6. [Principais Funcionalidades](#-principais-funcionalidades)
+7. [Integração com Inteligência Artificial (Gemini)](#-integração-com-inteligência-artificial-gemini)
+   - [A Persona: Mestre Vicente](#a-persona-mestre-vicente)
+   - [Regras de Comportamento e Guardrails](#regras-de-comportamento-e-guardrails)
+   - [Chamada de Ferramenta (Function Calling)](#chamada-de-ferramenta-function-calling)
+8. [Instruções de Instalação e Execução](#-instruções-de-instalação-e-execução)
+9. [Histórico de Commits e Controle de Versão](#-histórico-de-commits-e-controle-de-versão)
+10. [Licença e Observações Acadêmicas](#-licença-e-observações-acadêmicas)
 
 ---
 
-## 🏛️ Arquitetura do Sistema e Conceitos Implementados
+## 📖 Sobre o Projeto
 
-```
-[ Navegador (Cliente) ]
-       │
-       │ fetch('/api/chat', POST)
-       ▼
-[ Servidor Express (server.js) ] ──── lê ────► [ persona.js ] (Persona + Conhecimento + Regras)
-       │                                     [ .env ]       (Chave secreta GEMINI_API_KEY)
-       │ SDK @google/genai
-       ▼
-[ Google Gemini API (gemini-3.8-flash) ]
-       │
-       ▼ (Se houver intenção de agendar)
-[ Function Calling: registrar_pedido ] ──► Salva em [ pedidos.json ]
-```
+A **Barbearia Vintage & Cut** é uma aplicação web completa desenvolvida com foco na apresentação e contratação de serviços de estética e cuidados masculinos (cortes clássicos, visagismo, barboterapia com toalha quente e pigmentação). 
 
-### Principais Conceitos Aplicados:
-1. **Arquitetura Cliente-Servidor & Segurança:** A chave `GEMINI_API_KEY` nunca é exposta no navegador do usuário. Todas as requisições passam pelo backend Express via variáveis de ambiente (`dotenv`).
-2. **Engenharia de Prompt (System Instruction):** A persona, as regras e o conhecimento são organizados de forma modular em `persona.js` e injetados na chamada do Gemini.
-3. **Memória de Sessão (Context Window):** O cliente gera um `sessionId` único que permite ao modelo lembrar o contexto anterior do diálogo durante a conversa.
-4. **Chamada de Ferramentas (Function Calling):** Caso o cliente solicite agendamento informando seus dados, o Gemini aciona a função `registrar_pedido`, gravando a solicitação na base.
+O projeto une as melhores práticas de **desenvolvimento front-end responsivo** com um **backend moderno em Node.js/Express**, integrando diretamente o modelo de inteligência artificial de última geração **Google Gemini (gemini-3.8-flash)**. Através do atendente virtual com persona própria — o **Mestre Vicente** —, o visitante pode tirar dúvidas sobre serviços, horários, valores e até mesmo solicitar agendamentos de forma natural, que são persistidos no sistema via *Function Calling*.
+
+---
+
+## 🎯 Público-Alvo
+
+- Homens que valorizam o autocuidado, elegância e a tradição das barbearias clássicas;
+- Clientes que buscam praticidade para consultar tabela de preços, serviços e horários sem filas;
+- Usuários que preferem atendimento interativo, com recomendações personalizadas de estilo e facilidade para agendamento direto pelo chat ou formulário web integrado ao WhatsApp.
+
+---
+
+## 👥 Integrantes do Grupo
+
+ Isaac Silva | Rogério do Monte | José Gustavo
+
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-* **Front-end:** HTML5 semântico, CSS3 com variáveis personalizadas, JavaScript Moderno (ES6+), Font Awesome e Google Fonts.
-* **Back-end:** Node.js, Express.js.
-* **Inteligência Artificial:** SDK Oficial `@google/genai` (Modelo `gemini-3.8-flash`).
-* **Segurança e Variáveis:** `dotenv`.
+### Front-end
+- **HTML5 Semântico:** Estruturação em seções com cabeçalho fixo, top bar de status, galeria de cards, área de agendamento e rodapé completo.
+- **CSS3 Moderno:** Layout responsivo construído com **CSS Grid** e **Flexbox**, paleta de cores clássica/vintage, tipografia refinada (*Oswald* e *Poppins* via Google Fonts) e ícones via FontAwesome 6.
+- **JavaScript Moderno (ES6+ Client-side):** Lógica assíncrona com `fetch` para comunicação com o backend, verificação automática de horário de funcionamento em tempo real, preenchimento dinâmico de serviços no formulário e widget de chat interativo.
+
+### Back-end & Inteligência Artificial
+- **Node.js (ES Modules):** Ambiente de execução Javascript assíncrono.
+- **Express.js (v5.3.0):** Servidor HTTP para entrega dos arquivos estáticos e disponibilização do endpoint de conversação (`POST /api/chat`).
+- **Google Gen AI SDK (`@google/genai` v2.28.0):** SDK oficial para integração de alto desempenho com os modelos Gemini.
+- **Google Gemini 3.8 Flash:** Modelo de linguagem rápida e precisa, configurado com instruções de sistema estritas e chamada de funções (*Function Calling*).
+- **Dotenv (v18.0.0):** Gerenciamento seguro de variáveis de ambiente (`.env`).
+- **Persistência de Dados (JSON / FS):** Armazenamento estruturado de solicitações e reservas no arquivo `pedidos.json`.
 
 ---
 
-## 📂 Estrutura de Pastas
+## 📂 Estrutura do Projeto
 
-```text
-├── public/                 # Arquivos públicos entregues pelo servidor
-│   ├── index.html          # Interface principal e widget do chat
-│   ├── script.js           # Lógica do site e comunicação via fetch()
-│   └── style.css           # Estilos e paleta vintage (preto e dourado)
+```plaintext
+vintage_cut-main/
 │
-├── .env.exemplo            # Modelo de configuração da chave de API
-├── .gitignore              # Ignora node_modules, .env e pedidos.json
-├── package.json            # Metadados e dependências do projeto
-├── persona.js              # Persona, Base de Conhecimento e Regras
-├── server.js               # Servidor Express com rota /api/chat e Gemini
-└── vercel.json             # Configuração de rotas para deploy na Vercel
+├── .env                      # Chaves e variáveis de ambiente (GEMINI_API_KEY)
+├── .gitignore                # Arquivos ignorados pelo Git (node_modules, .env, etc.)
+├── package.json              # Metadados, dependências e scripts do projeto
+├── package-lock.json         # Trava de versões exatas das dependências
+│
+├── persona.js                # Ficha de contratação, tom, conhecimento e guardrails da IA
+├── server.js                 # Servidor Express, rota da API e integração com Gemini SDK
+├── pedidos.json              # Base de dados JSON de agendamentos gerados via Function Calling
+│
+├── public/                   # Arquivos públicos entregues pelo servidor Express
+│   ├── index.html            # Estrutura HTML5 com menus, cards, formulário e modal
+│   ├── style.css             # Estilização completa, Grid, Flexbox e media queries
+│   └── script.js             # Lógica front-end, comunicação com API e manipulação do DOM
+│
+└── README.md                 # Documentação técnica completa da avaliação
 ```
 
 ---
 
-## 🚀 Como Executar Localmente
+## ⚙️ Principais Funcionalidades
+
+1. **Top Bar Dinâmica com Status em Tempo Real:**
+   - Detecta automaticamente o dia e a hora local do cliente, informando visualmente com badge colorido se a barbearia está aberta ou fechada no momento.
+2. **Navegação Funcional Completa (5 Menus):**
+   - **Início (`#home`):** Hero section com chamada de ação e visual clássico.
+   - **Sobre (`#sobre`):** Apresentação da tradição da barbearia, biossegurança e diferenciais em cards.
+   - **Serviços (`#servicos`):** Cards responsivos (`display: grid`) contendo ícones, descrições, preços e botão de seleção rápida com preenchimento automático.
+   - **Agendamento (`#agendamento`):** Formulário interativo com seleção de data, horários comerciais, serviço e observações, com modal de resumo e envio direto para WhatsApp.
+   - **Contato (`#contato`):** Rodapé informativo com horários de funcionamento, canais de comunicação, redes sociais e localização em Teresina - PI.
+3. **Cards com CSS Grid / Flexbox:**
+   - Destaque especial para o serviço mais pedido (*Combo Master Vintage*), com badge visual de coroa e borda iluminada.
+4. **Modal de Confirmação:**
+   - Ao enviar o formulário, exibe uma janela modal acessível com o resumo da reserva e opção para notificar a equipe via link dinâmico da API do WhatsApp.
+5. **Widget de Chatbot Flutuante:**
+   - Botão retrátil com animação de tesoura, janela de conversa, histórico mantido na sessão e indicador de respostas em tempo real.
+
+---
+
+## 🤖 Integração com Inteligência Artificial (Gemini)
+
+### A Persona: Mestre Vicente
+O atendente virtual não é um chatbot genérico, possuindo perfil e identidade altamente alinhados ao conceito da barbearia:
+- **Nome:** Mestre Vicente
+- **Empresa:** Barbearia Vintage & Cut (fundada em 2018)
+- **Ramo:** Barbearia clássica tradicional masculina e barboterapia
+- **Tom de Voz:** Elegante, clássico, acolhedor e atencioso. Trata cordialmente o cliente como *"cavalheiro"* ou *"meu caro"*, emitindo respostas objetivas de até 3 ou 4 frases.
+
+### Regras de Comportamento e Guardrails
+O arquivo [`persona.js`](persona.js) atua como a diretriz de sistema (*System Instruction*) do modelo, impondo limites rígidos:
+1. **Base de Conhecimento Estrita:** O assistente responde apenas sobre os serviços, preços e horários cadastrados (ex: Corte Masculino a R$ 45, Barboterapia a R$ 35, Combo Master a R$ 70, Pigmentação a R$ 30).
+2. **Sem Fuga de Contexto:** Caso o usuário pergunte sobre política, esportes, religião ou programação, o Mestre Vicente redireciona a conversa com polidez de volta à barbearia.
+3. **Respeito aos Horários de Funcionamento:** Informa que a barbearia não abre aos domingos e feriados, recusando educadamente agendamentos nessas datas.
+
+### Chamada de Ferramenta (Function Calling)
+O backend implementa a ferramenta `registrar_pedido` por meio das capacidades nativas de Tools do SDK do Gemini:
+- Quando o usuário expressa o desejo de agendar pelo próprio chat e informa nome, telefone/WhatsApp e horário, a IA aciona a função `registrar_pedido`.
+- O servidor intercepta os argumentos da ferramenta, adiciona o carimbo de data/hora atual e salva o agendamento em [`pedidos.json`](pedidos.json).
+- Em seguida, devolve o resultado para a IA confirmar o sucesso do agendamento de forma humanizada.
+
+---
+
+## 🚀 Instruções de Instalação e Execução
 
 ### Pré-requisitos
-* [Node.js](https://nodejs.org/) instalado (versão 18 ou superior).
-* Chave gratuita da API do Gemini gerada no [Google AI Studio](https://aistudio.google.com/).
+- **Node.js** (versão 18.x ou superior recomendada);
+- Gerenciador de pacotes **npm** (incluso com o Node.js);
+- Chave de API do **Google Gemini** ([Google AI Studio](https://aistudio.google.com/)).
 
 ### Passo a Passo
 
-1. **Clone o repositório:**
+1. **Clonar o Repositório do GitHub:**
    ```bash
-   git clone https://github.com/dev-squadRoiz/vintage_cut.git
-   cd vintage_cut
+   git clone https://github.com/[seu-usuario]/vintage-cut.git
+   cd vintage-cut
    ```
 
-2. **Instale as dependências:**
+2. **Instalar as Dependências:**
    ```bash
    npm install
    ```
 
-3. **Configure as Variáveis de Ambiente:**
-   Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+3. **Configurar as Variáveis de Ambiente:**
+   Crie um arquivo `.env` na raiz do projeto (caso não exista) e adicione sua chave de API:
    ```env
-   GEMINI_API_KEY=sua_chave_do_google_aqui
+   GEMINI_API_KEY=sua_chave_do_google_gemini_aqui
    ```
 
-4. **Inicie o servidor:**
+4. **Iniciar o Servidor:**
    ```bash
-   node server.js
-   # ou: npm start
+   npm start
    ```
 
-5. **Acesse a aplicação:**
-   Abra seu navegador em: **`http://localhost:3000`**
+5. **Acessar a Aplicação:**
+   Abra seu navegador e acesse:
+   ```
+   http://localhost:3000
+   ```
 
 ---
 
-## ☁️ Como Fazer o Deploy na Vercel
+## 📈 Histórico de Commits e Controle de Versão
 
-1. Suba o projeto atualizado para o seu repositório no GitHub:
-   ```bash
-   git add .
-   git commit -m "feat: Integracao de IA com Persona Mestre Vicente e configuracao Vercel"
-   git push origin main
-   ```
-2. Acesse [vercel.com](https://vercel.com/) e conecte com o GitHub.
-3. Importe o repositório `vintage_cut`.
-4. **MUITO IMPORTANTE:** Na etapa de configuração do projeto na Vercel, abra a seção **Environment Variables** e adicione:
-   * **Key:** `GEMINI_API_KEY`
-   * **Value:** *(Cole aqui a sua chave do Google AI Studio)*
-5. Clique em **Deploy**. A Vercel utilizará o arquivo `vercel.json` para rotear o front-end e o back-end automaticamente!
+Conforme exigido nas diretrizes da AV3:
+- O desenvolvimento do repositório foi distribuído entre os 3 integrantes do grupo.
+- Os commits refletem contribuições nas etapas de criação da estrutura HTML/CSS, estilização responsiva, criação da persona e regras da IA, desenvolvimento do backend em Express e integração do chat via API com Function Calling.
+- Mensagens de commit padronizadas e claras para facilitar o rastreamento individual pelo corpo docente.
 
 ---
 
-## 👥 Equipe / Autores
+## 📄 Licença e Observações Acadêmicas
 
-* **Projeto:** Barbearia Vintage & Cut
-* **Curso:** Desenvolvimento Web para IA
+Projeto desenvolvido para fins educacionais e de avaliação acadêmica para a disciplina de **Desenvolvimento Web para IA** do **Instituto de Tecnologia – PIT (Faculdade Estadual Piauí)**.
