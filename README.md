@@ -1,10 +1,19 @@
 # 💈 Barbearia Vintage & Cut — Sistema Web com Assistente de IA
+<<<<<<< HEAD
 
 > **3ª Avaliação (AV3 — Parte 1): Projeto e Entrega do Código**  
 > **Disciplina:** Desenvolvimento Web para IA  
 > **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
 > **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
 > **Prazo:** 08/11/2026 até às 23h59
+=======
+
+> **3ª Avaliação (AV3 — Parte 1): Projeto e Entrega do Código**  
+> **Disciplina:** Desenvolvimento Web para IA  
+> **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
+> **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
+
+>>>>>>> 8aae38ccda54fcea8e97fd5b4bc6cc4b8b95d6db
 
 ---
 
@@ -38,6 +47,7 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 - Homens que valorizam o autocuidado, elegância e a tradição das barbearias clássicas;
 - Clientes que buscam praticidade para consultar tabela de preços, serviços e horários sem filas;
 - Usuários que preferem atendimento interativo, com recomendações personalizadas de estilo e facilidade para agendamento direto pelo chat ou formulário web integrado ao WhatsApp.
+<<<<<<< HEAD
 
 ---
 
@@ -48,6 +58,15 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 | 👨‍💻 | Isaac Silva | `[Sua Matrícula]` | [@seu-usuario](https://github.com/seu-usuario) |
 | 👨‍💻 | [Nome do Integrante 2] | `[Matrícula]` | [@usuario2](https://github.com/usuario2) |
 | 👨‍💻 | [Nome do Integrante 3] | `[Matrícula]` | [@usuario3](https://github.com/usuario3) |
+=======
+
+---
+
+## 👥 Integrantes do Grupo
+
+ Isaac Silva | Rogério do Monte | José Gustavo
+
+>>>>>>> 8aae38ccda54fcea8e97fd5b4bc6cc4b8b95d6db
 
 ---
 
