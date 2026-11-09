@@ -35,8 +35,8 @@ dotenv.config({ quiet: true });
 // ---------------------------------------------------------------------
 const PORTA = 3000; // O site abrirá em http://localhost:3000
 
-// Modelo Gemini utilizado
-const MODELO = "gemini-3.8-flash";
+// Modelo Gemini utilizado (com fallback automático se houver sobrecarga)
+const MODELOS = ["gemini-3.5-flash", "gemini-3.8-flash"];
 
 if (!process.env.GEMINI_API_KEY) {
   console.warn(
@@ -145,7 +145,6 @@ app.post("/api/chat", async (req, res) => {
   }
 
   console.log(`\n💬 Mensagem recebida: "${mensagem}"`);
-  console.log(`⏳ Consultando Gemini (${MODELO})...`);
 
   const historico = pegarHistorico(sessionId || "anonimo");
   const tamanhoAntes = historico.length;
@@ -156,14 +155,31 @@ app.post("/api/chat", async (req, res) => {
 
     // Ciclo de processamento da resposta e possíveis chamadas de ferramentas
     for (let volta = 1; volta <= 3; volta++) {
-      const resposta = await ai.models.generateContent({
-        model: MODELO,
-        contents: historico,
-        config: {
-          systemInstruction: INSTRUCAO_DE_SISTEMA,
-          tools: [{ functionDeclarations: FERRAMENTAS }],
-        },
-      });
+      let resposta = null;
+      let erroUltimo = null;
+
+      // Tenta os modelos configurados em ordem de disponibilidade
+      for (const modeloAtual of MODELOS) {
+        try {
+          console.log(`⏳ Consultando Gemini (${modeloAtual})...`);
+          resposta = await ai.models.generateContent({
+            model: modeloAtual,
+            contents: historico,
+            config: {
+              systemInstruction: INSTRUCAO_DE_SISTEMA,
+              tools: [{ functionDeclarations: FERRAMENTAS }],
+            },
+          });
+          if (resposta) break;
+        } catch (errModelo) {
+          console.warn(`⚠️ Modelo ${modeloAtual} instável (${errModelo.message}). Tentando fallback...`);
+          erroUltimo = errModelo;
+        }
+      }
+
+      if (!resposta) {
+        throw erroUltimo || new Error("Nenhum modelo de IA disponível no momento.");
+      }
 
       const conteudo = resposta.candidates?.[0]?.content;
       if (conteudo) historico.push(conteudo);
@@ -193,6 +209,15 @@ app.post("/api/chat", async (req, res) => {
   } catch (erro) {
     console.error("❌ Erro ao comunicar com o Gemini:", erro);
     historico.length = tamanhoAntes;
+
+    // Resposta amigável em caso de sobrecarga temporária da infraestrutura do Google
+    const msgStr = (erro?.message || "").toLowerCase();
+    if (msgStr.includes("503") || msgStr.includes("high demand") || msgStr.includes("unavailable")) {
+      return res.json({
+        resposta: "Perdão pela brevidade, meu caro! Nossos canais estão com uma procura extraordinária neste exato minuto. Poderia enviar novamente sua mensagem ou contatar-nos pelo WhatsApp (86) 99999-9999?",
+      });
+    }
+
     return res.status(500).json({ erro: erro?.message || "Falha ao processar resposta com a IA." });
   }
 });
