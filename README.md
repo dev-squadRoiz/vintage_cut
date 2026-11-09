@@ -4,7 +4,6 @@
 > **Disciplina:** Desenvolvimento Web para IA  
 > **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
 > **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
-> **Prazo:** 08/11/2026 até às 23h59
 
 ---
 
@@ -48,7 +47,7 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 | :---: | :--- | :---: | :---: |
 | 👨‍💻 | Isaac Silva | `[Matrícula]` | [@cybercerberox](https://github.com/cybercerberox) |
 | 👨‍💻 | Rogério do Monte | `[Matrícula]` | [@Rogério206](https://github.com/Rogério206) |
-| 👨‍💻 | José Gustavo | `[Matrícula]` | [@gt](https://github.com/gt) |
+| 👨‍💻 | José Gustavo | `[Matrícula]` | [@gutoneosoro](https://github.com/gutoneosoro) |
 
 ---
 
