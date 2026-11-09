@@ -1,19 +1,10 @@
 # 💈 Barbearia Vintage & Cut — Sistema Web com Assistente de IA
-<<<<<<< HEAD
 
 > **3ª Avaliação (AV3 — Parte 1): Projeto e Entrega do Código**  
 > **Disciplina:** Desenvolvimento Web para IA  
 > **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
 > **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
 > **Prazo:** 08/11/2026 até às 23h59
-=======
-
-> **3ª Avaliação (AV3 — Parte 1): Projeto e Entrega do Código**  
-> **Disciplina:** Desenvolvimento Web para IA  
-> **Curso:** Superior de Tecnologia em Inteligência Artificial — 2º Período, Turno Noite  
-> **Instituição:** Faculdade Estadual Piauí — Instituto de Tecnologia (PIT)  
-
->>>>>>> 8aae38ccda54fcea8e97fd5b4bc6cc4b8b95d6db
 
 ---
 
@@ -29,8 +20,9 @@
    - [Regras de Comportamento e Guardrails](#regras-de-comportamento-e-guardrails)
    - [Chamada de Ferramenta (Function Calling)](#chamada-de-ferramenta-function-calling)
 8. [Instruções de Instalação e Execução](#-instruções-de-instalação-e-execução)
-9. [Histórico de Commits e Controle de Versão](#-histórico-de-commits-e-controle-de-versão)
-10. [Licença e Observações Acadêmicas](#-licença-e-observações-acadêmicas)
+9. [Deploy na Vercel](#-deploy-na-vercel)
+10. [Histórico de Commits e Controle de Versão](#-histórico-de-commits-e-controle-de-versão)
+11. [Licença e Observações Acadêmicas](#-licença-e-observações-acadêmicas)
 
 ---
 
@@ -47,7 +39,6 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 - Homens que valorizam o autocuidado, elegância e a tradição das barbearias clássicas;
 - Clientes que buscam praticidade para consultar tabela de preços, serviços e horários sem filas;
 - Usuários que preferem atendimento interativo, com recomendações personalizadas de estilo e facilidade para agendamento direto pelo chat ou formulário web integrado ao WhatsApp.
-<<<<<<< HEAD
 
 ---
 
@@ -55,18 +46,9 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 
 | Avatar | Nome Completo | Matrícula | Perfil GitHub |
 | :---: | :--- | :---: | :---: |
-| 👨‍💻 | Isaac Silva | `[Sua Matrícula]` | [@seu-usuario](https://github.com/seu-usuario) |
-| 👨‍💻 | [Nome do Integrante 2] | `[Matrícula]` | [@usuario2](https://github.com/usuario2) |
-| 👨‍💻 | [Nome do Integrante 3] | `[Matrícula]` | [@usuario3](https://github.com/usuario3) |
-=======
-
----
-
-## 👥 Integrantes do Grupo
-
- Isaac Silva | Rogério do Monte | José Gustavo
-
->>>>>>> 8aae38ccda54fcea8e97fd5b4bc6cc4b8b95d6db
+| 👨‍💻 | Isaac Silva | `[Matrícula]` | [@cybercerberox](https://github.com/cybercerberox) |
+| 👨‍💻 | Rogério do Monte | `[Matrícula]` | [@Rogério206](https://github.com/Rogério206) |
+| 👨‍💻 | José Gustavo | `[Matrícula]` | [@gt](https://github.com/gt) |
 
 ---
 
@@ -90,15 +72,14 @@ O projeto une as melhores práticas de **desenvolvimento front-end responsivo** 
 ## 📂 Estrutura do Projeto
 
 ```plaintext
-vintage_cut-main/
+vintage_cut/
 │
 ├── .env                      # Chaves e variáveis de ambiente (GEMINI_API_KEY)
 ├── .gitignore                # Arquivos ignorados pelo Git (node_modules, .env, etc.)
 ├── package.json              # Metadados, dependências e scripts do projeto
-├── package-lock.json         # Trava de versões exatas das dependências
-│
 ├── persona.js                # Ficha de contratação, tom, conhecimento e guardrails da IA
 ├── server.js                 # Servidor Express, rota da API e integração com Gemini SDK
+├── vercel.json               # Configuração oficial da Vercel para Node Express
 ├── pedidos.json              # Base de dados JSON de agendamentos gerados via Function Calling
 │
 ├── public/                   # Arquivos públicos entregues pelo servidor Express
@@ -164,8 +145,8 @@ O backend implementa a ferramenta `registrar_pedido` por meio das capacidades na
 
 1. **Clonar o Repositório do GitHub:**
    ```bash
-   git clone https://github.com/[seu-usuario]/vintage-cut.git
-   cd vintage-cut
+   git clone https://github.com/dev-squadRoiz/vintage_cut.git
+   cd vintage_cut
    ```
 
 2. **Instalar as Dependências:**
@@ -185,17 +166,30 @@ O backend implementa a ferramenta `registrar_pedido` por meio das capacidades na
    ```
 
 5. **Acessar a Aplicação:**
-   Abra seu navegador e acesse:
+   Abra seu navegador em: `http://localhost:3000`
+
+---
+
+## ☁️ Deploy na Vercel
+
+1. Certifique-se de que o repositório no GitHub está atualizado:
+   ```bash
+   git add .
+   git commit -m "fix: Correcao do vercel.json e atualizacao do README"
+   git push origin main
    ```
-   http://localhost:3000
-   ```
+2. No painel da [Vercel](https://vercel.com), acesse o projeto.
+3. Vá em **Settings** > **Environment Variables** e adicione:
+   - **Key:** `GEMINI_API_KEY`
+   - **Value:** Cole sua chave da API do Gemini.
+4. Vá em **Deployments** e faça o **Redeploy**.
 
 ---
 
 ## 📈 Histórico de Commits e Controle de Versão
 
 Conforme exigido nas diretrizes da AV3:
-- O desenvolvimento do repositório foi distribuído entre os 3 integrantes do grupo.
+- O desenvolvimento do repositório foi distribuído entre os 3 integrantes do grupo (**Isaac Silva**, **Rogério do Monte**, **José Gustavo**).
 - Os commits refletem contribuições nas etapas de criação da estrutura HTML/CSS, estilização responsiva, criação da persona e regras da IA, desenvolvimento do backend em Express e integração do chat via API com Function Calling.
 - Mensagens de commit padronizadas e claras para facilitar o rastreamento individual pelo corpo docente.
 
