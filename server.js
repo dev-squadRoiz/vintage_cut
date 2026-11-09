@@ -18,8 +18,14 @@
 import express from "express";                    // Servidor web HTTP
 import dotenv from "dotenv";                      // Leitor do arquivo .env
 import fs from "fs";                              // Leitor/escritor de arquivos locais
+import path from "path";                          // Manipulador de caminhos
+import { fileURLToPath } from "url";              // Utilitário de URL para ES Modules
 import { GoogleGenAI, Type } from "@google/genai"; // SDK oficial do Gemini
 import { PERSONA, CONHECIMENTO, REGRAS } from "./persona.js"; // Persona e regras
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const publicPath = path.join(__dirname, "public");
 
 // Carrega as variáveis de ambiente do .env
 dotenv.config({ quiet: true });
@@ -43,8 +49,13 @@ if (!process.env.GEMINI_API_KEY) {
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const app = express();
 
-app.use(express.json());           // Interpreta requisições com corpo JSON
-app.use(express.static("public")); // Entrega os arquivos estáticos da pasta public
+app.use(express.json());               // Interpreta requisições com corpo JSON
+app.use(express.static(publicPath));   // Entrega os arquivos estáticos da pasta public
+
+// Rota explícita para a página principal (necessário para a Vercel)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(publicPath, "index.html"));
+});
 
 // ---------------------------------------------------------------------
 // 2) SYSTEM INSTRUCTION (Instrução de Sistema com a Persona)
