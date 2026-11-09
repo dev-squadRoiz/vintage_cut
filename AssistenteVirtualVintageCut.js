@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // ASSISTENTE VIRTUAL E PERSONA DO CHATBOT (VINTAGE & CUT) //
 document.addEventListener('DOMContentLoaded', () => {
     initChatbot();
@@ -97,7 +97,7 @@ function initChatbot() {
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleUserMessage();
     });
-=======
+
 // ASSISTENTE VIRTUAL E PERSONA DO CHATBOT (VINTAGE & CUT) //
 document.addEventListener('DOMContentLoaded', () => {
     initChatbot();
@@ -196,5 +196,3 @@ function initChatbot() {
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleUserMessage();
     });
->>>>>>> f522aa3 (Correção de opções inválidas na aba de agendamento)
-}
