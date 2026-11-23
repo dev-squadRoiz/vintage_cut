@@ -180,7 +180,7 @@ function processarAgendamento(e) {
 
     const whatsappLink = document.getElementById('whatsappLink');
     if (whatsappLink) {
-        whatsappLink.href = `https://wa.me/5586999999999?text=${mensagemWhatsApp}`;
+        whatsappLink.href = `https://wa.me/5591991276010?text=${mensagemWhatsApp}`;
     }
 
     const modal = document.getElementById('bookingModal');
